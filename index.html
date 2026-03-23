@@ -1063,6 +1063,35 @@ section{padding:110px 60px;position:relative}
 .btn-outline-gold:hover{background:var(--gold);color:var(--bk);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,175,55,.3)}
 
 /* =============================================
+   LEAD FORM — v0.94
+   ============================================= */
+.lf-group{margin-bottom:14px}
+.lf-label{
+  display:block;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;
+  font-weight:600;color:var(--muted);margin-bottom:6px;
+}
+.lf-input{
+  width:100%;background:rgba(255,255,255,.05);
+  border:1px solid var(--dim2);border-radius:var(--br);
+  color:var(--wh);font-family:'Barlow',sans-serif;font-size:.93rem;
+  padding:10px 14px;transition:border-color .22s,background .22s;
+  -webkit-appearance:none;appearance:none;
+}
+.lf-input:focus{outline:none;border-color:var(--gold);background:rgba(212,175,55,.06)}
+.lf-input::placeholder{color:rgba(255,255,255,.25)}
+.lf-textarea{resize:vertical;min-height:90px}
+.lf-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.lf-select option{background:#111;color:#fff}
+.lead-status{
+  font-size:.85rem;padding:10px 14px;border-radius:var(--br);
+  margin-bottom:14px;display:none;
+}
+.lead-status.ok{display:block;background:rgba(27,124,59,.15);border:1px solid rgba(27,124,59,.35);color:#6ddb8e}
+.lead-status.err{display:block;background:rgba(200,32,42,.12);border:1px solid rgba(200,32,42,.3);color:#f87b7b}
+.lf-submit{width:100%;justify-content:center;margin-top:4px}
+.lf-submit:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+/* =============================================
    FOOTER
    ============================================= */
 footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40px}
@@ -1867,9 +1896,35 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
           <span class="vol-perk" data-t="vp3">Networking real</span>
           <span class="vol-perk" data-t="vp4">Entradas al festival</span>
         </div>
-        <a href="mailto:turicine@gmail.com?subject=Voluntario%20TURICINE%202025" class="btn-outline-gold" data-t="volBtn">
-          Unirme como voluntario →
-        </a>
+        <!-- FORM conectado al Worker — v0.94 -->
+        <form id="lead-form" novalidate>
+          <div class="lf-group">
+            <label class="lf-label" for="lf-name">Nombre</label>
+            <input class="lf-input" id="lf-name" type="text" placeholder="Tu nombre">
+          </div>
+          <div class="lf-group">
+            <label class="lf-label" for="lf-email">Email *</label>
+            <input class="lf-input" id="lf-email" type="email" required placeholder="correo@ejemplo.com">
+          </div>
+          <div class="lf-group">
+            <label class="lf-label" for="lf-org">Organización</label>
+            <input class="lf-input" id="lf-org" type="text" placeholder="Empresa o institución (opcional)">
+          </div>
+          <div class="lf-group">
+            <label class="lf-label" for="lf-type">Motivo</label>
+            <select class="lf-input lf-select" id="lf-type">
+              <option value="voluntario">Voluntariado</option>
+              <option value="auspicio">Auspicio corporativo</option>
+              <option value="contacto">Información general</option>
+            </select>
+          </div>
+          <div class="lf-group">
+            <label class="lf-label" for="lf-msg">Mensaje</label>
+            <textarea class="lf-input lf-textarea" id="lf-msg" rows="3" placeholder="Cuéntanos..."></textarea>
+          </div>
+          <div id="lead-status" class="lead-status" aria-live="polite"></div>
+          <button type="submit" class="btn-outline-gold lf-submit">Enviar mensaje →</button>
+        </form>
       </div>
     </div>
   </div>
@@ -2375,6 +2430,55 @@ window.addEventListener('scroll',()=>{
     }
   });
 },{passive:true});
+
+/* =============================================
+   LEAD FORM — v0.94
+   ⚠ Actualiza WORKER_URL tras hacer:
+     wrangler deploy workers/leads.js
+   ============================================= */
+var WORKER_URL = 'https://TU_WORKER.workers.dev/leads';
+
+var leadForm   = document.getElementById('lead-form');
+var leadStatus = document.getElementById('lead-status');
+if(leadForm){
+  leadForm.addEventListener('submit',async function(e){
+    e.preventDefault();
+    var btn  = leadForm.querySelector('.lf-submit');
+    var data = {
+      name:    document.getElementById('lf-name').value.trim(),
+      email:   document.getElementById('lf-email').value.trim(),
+      org:     document.getElementById('lf-org').value.trim(),
+      type:    document.getElementById('lf-type').value,
+      message: document.getElementById('lf-msg').value.trim()
+    };
+    if(!data.email || !data.email.includes('@')){
+      leadStatus.className='lead-status err';
+      leadStatus.textContent='Por favor ingresa un email válido.';
+      return;
+    }
+    btn.disabled=true; btn.textContent='Enviando...';
+    leadStatus.className='lead-status'; leadStatus.textContent='';
+    try{
+      var r = await fetch(WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(data)
+      });
+      if(r.ok){
+        leadStatus.className='lead-status ok';
+        leadStatus.textContent='¡Mensaje recibido! Te contactaremos pronto.';
+        leadForm.reset();
+      } else {
+        throw new Error('HTTP '+r.status);
+      }
+    }catch(err){
+      leadStatus.className='lead-status err';
+      leadStatus.textContent='No se pudo enviar. Escríbenos a turicine@gmail.com';
+    }finally{
+      btn.disabled=false; btn.textContent='Enviar mensaje →';
+    }
+  });
+}
 
 /* Init */
 applyLang('es');
