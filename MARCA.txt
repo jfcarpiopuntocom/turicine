@@ -167,7 +167,7 @@
 ────────────────────────────────────────────────────────────────────────────────
 
   #hero       Hero principal. Logo real (logo-icono.png), carrete giratorio,
-              countdown a 2025-08-20, CTAs.
+              countdown a 2026-08-20, CTAs.
   #que        ¿Qué es TURICINE? Mosaico + significado del nombre + stats.
   #tray       Trayectoria y solidez. Timeline 2019-2025 + destacados.
   #fest       El festival. 10 días / funciones / sedes + 6 tarjetas de actividades.
@@ -254,7 +254,7 @@
   URL publicada:  https://jfcarpiopuntocom.github.io/turicine/
   Canonical:      mismo URL en <link rel="canonical">
   og:image:       assets/seccion-actividades.png (1200×630 recomendado)
-  JSON-LD:        Event schema con startDate 2025-08-20, endDate 2025-08-30
+  JSON-LD:        Event schema con startDate 2026-08-20, endDate 2026-08-30
   Favicon:        assets/logo-icono.png
   PWA manifest:   manifest.json
 
