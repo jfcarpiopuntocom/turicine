@@ -64,6 +64,13 @@
 <link rel="apple-touch-icon"                       href="assets/logo-icono.png">
 <link rel="manifest"                               href="manifest.json">
 
+<!-- Performance — v0.98: preconnect para woff2 en fonts.gstatic.com -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+<!-- Hero carrete: precarga para LCP cuando el PNG exista -->
+<link rel="preload" href="assets/carrete.png" as="image" fetchpriority="high">
+
 <link rel="stylesheet" href="assets/fonts-barlow.css">
 <style>
 /* =============================================
@@ -1273,6 +1280,7 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
            Si assets/carrete.png no existe, el SVG de fallback sigue visible. -->
       <img class="hero-reel" src="assets/carrete.png"
            alt="" aria-hidden="true" width="130" height="130"
+           fetchpriority="high" loading="eager"
            style="display:none"
            onload="this.style.display='inline-block';this.nextElementSibling.style.display='none'">
       <svg class="hero-reel hero-reel-fb" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2484,51 +2492,54 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 /* =============================================
-   LEAD FORM — v0.94
-   ⚠ Actualiza WORKER_URL tras hacer:
-     wrangler deploy workers/leads.js
+   LEAD FORM — v0.94 / v0.98
+   Abre correo preescrito con las respuestas.
+   Cuando despliegues el Worker, descomenta el
+   bloque fetch y comenta el mailto.
    ============================================= */
-var WORKER_URL = 'https://TU_WORKER.workers.dev/leads';
-
 var leadForm   = document.getElementById('lead-form');
 var leadStatus = document.getElementById('lead-status');
 if(leadForm){
-  leadForm.addEventListener('submit',async function(e){
+  leadForm.addEventListener('submit',function(e){
     e.preventDefault();
-    var btn  = leadForm.querySelector('.lf-submit');
-    var data = {
-      name:    document.getElementById('lf-name').value.trim(),
-      email:   document.getElementById('lf-email').value.trim(),
-      org:     document.getElementById('lf-org').value.trim(),
-      type:    document.getElementById('lf-type').value,
-      message: document.getElementById('lf-msg').value.trim()
-    };
-    if(!data.email || !data.email.includes('@')){
+    var name    = document.getElementById('lf-name').value.trim();
+    var email   = document.getElementById('lf-email').value.trim();
+    var org     = document.getElementById('lf-org').value.trim();
+    var type    = document.getElementById('lf-type');
+    var typeLabel = type.options[type.selectedIndex].text;
+    var message = document.getElementById('lf-msg').value.trim();
+
+    if(!email || !email.includes('@')){
       leadStatus.className='lead-status err';
       leadStatus.textContent='Por favor ingresa un email válido.';
       return;
     }
-    btn.disabled=true; btn.textContent='Enviando...';
-    leadStatus.className='lead-status'; leadStatus.textContent='';
-    try{
-      var r = await fetch(WORKER_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(data)
-      });
-      if(r.ok){
-        leadStatus.className='lead-status ok';
-        leadStatus.textContent='¡Mensaje recibido! Te contactaremos pronto.';
-        leadForm.reset();
-      } else {
-        throw new Error('HTTP '+r.status);
-      }
-    }catch(err){
-      leadStatus.className='lead-status err';
-      leadStatus.textContent='No se pudo enviar. Escríbenos a turicine@gmail.com';
-    }finally{
-      btn.disabled=false; btn.textContent='Enviar mensaje →';
-    }
+
+    var subject = 'TURICINE 2025 — ' + typeLabel;
+    var body = [
+      'Nombre: '        + (name    || '—'),
+      'Email: '         + email,
+      'Organización: '  + (org     || '—'),
+      'Motivo: '        + typeLabel,
+      '',
+      'Mensaje:',
+      message || '—'
+    ].join('\n');
+
+    window.location.href =
+      'mailto:turicine@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body='    + encodeURIComponent(body);
+
+    leadStatus.className='lead-status ok';
+    leadStatus.textContent='Abriendo tu cliente de correo... Si no abre, escríbenos directo a turicine@gmail.com';
+    leadForm.reset();
+
+    /* — Worker (activar cuando esté desplegado) —
+    var WORKER_URL = 'https://TU_WORKER.workers.dev/leads';
+    fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,email,org,type:type.value,message})});
+    */
   });
 }
 
