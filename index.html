@@ -1268,7 +1268,14 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
 
     <h1 class="hero-title" id="hero-title">
       <span class="dim">T</span>URI
-      <svg class="hero-reel" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- v0.96: carrete.png cuando el usuario lo entregue.
+           img oculta por defecto → al cargar exitosamente, reemplaza el SVG.
+           Si assets/carrete.png no existe, el SVG de fallback sigue visible. -->
+      <img class="hero-reel" src="assets/carrete.png"
+           alt="" aria-hidden="true" width="130" height="130"
+           style="display:none"
+           onload="this.style.display='inline-block';this.nextElementSibling.style.display='none'">
+      <svg class="hero-reel hero-reel-fb" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <circle cx="50" cy="50" r="46" stroke="#D4AF37" stroke-width="2" fill="none"/>
         <circle cx="50" cy="50" r="8" fill="#D4AF37"/>
         <circle cx="50" cy="14" r="5" fill="#C8202A"/>
