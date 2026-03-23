@@ -18,7 +18,8 @@
 <meta property="og:title"       content="TURICINE 2025 • Festival Ecuatoriano de Cine">
 <meta property="og:description" content="Cine en todas partes, cine para todos. 6 ediciones, 3.500+ asistentes, múltiples sedes en Quito.">
 <meta property="og:image"       content="https://jfcarpiopuntocom.github.io/turicine/assets/seccion-actividades.png">
-<meta property="og:image:width" content="1200">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt"   content="TURICINE — Proyecciones, Cine Foros, Formación y Encuentros">
 <meta property="og:locale"      content="es_EC">
 <meta property="og:site_name"   content="TURICINE">
@@ -54,6 +55,8 @@
       "addressCountry": "EC"
     }
   },
+  "startDate": "2025-08-20",
+  "endDate":   "2025-08-30",
   "eventStatus": "https://schema.org/EventScheduled",
   "inLanguage": "es"
 }
@@ -68,8 +71,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
-<!-- Hero carrete: precarga para LCP cuando el PNG exista -->
+<!-- Hero carrete: descomenta este preload cuando assets/carrete.png exista
 <link rel="preload" href="assets/carrete.png" as="image" fetchpriority="high">
+-->
 
 <link rel="stylesheet" href="assets/fonts-barlow.css">
 <style>
@@ -1184,27 +1188,9 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
      ============================================= -->
 <header id="hdr" role="banner">
 
-  <!-- LOGO — fiel al media kit -->
+  <!-- LOGO — activo desde assets/ -->
   <a href="#" class="hdr-logo" aria-label="TURICINE — Inicio">
-    <!-- Camera SVG basado en logo del media kit -->
-    <svg class="logo-camera" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Film circles (top) -->
-      <circle cx="14" cy="10" r="5.5" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
-      <circle cx="14" cy="10" r="2.5" fill="#D4AF37"/>
-      <circle cx="30" cy="10" r="5.5" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
-      <circle cx="30" cy="10" r="2.5" fill="#D4AF37"/>
-      <!-- Camera body (colorful quadrants like media kit) -->
-      <rect x="4" y="17" width="18" height="20" rx="2" fill="#C8202A"/>
-      <rect x="22" y="17" width="18" height="20" rx="2" fill="#1B4FBB"/>
-      <rect x="4" y="27" width="18" height="10" rx="0 0 2 2" fill="#E06020"/>
-      <rect x="22" y="27" width="18" height="10" rx="0 0 2 2" fill="#1B7C3B"/>
-      <!-- Lens -->
-      <circle cx="22" cy="27" r="7" fill="#080808" stroke="#D4AF37" stroke-width="1.5"/>
-      <circle cx="22" cy="27" r="4" fill="#D4AF37"/>
-      <circle cx="22" cy="27" r="1.8" fill="#080808"/>
-      <!-- Record button -->
-      <rect x="37" y="21" width="5" height="5" rx="1" fill="#6B2F8A"/>
-    </svg>
+    <img class="logo-camera" src="assets/logo-icono.png" alt="" aria-hidden="true" width="36" height="36">
     <div>
       <div class="logo-wordmark">
         <span class="t1">TURI</span><span class="t2">Cine</span>
@@ -1284,15 +1270,16 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
            style="display:none"
            onload="this.style.display='inline-block';this.nextElementSibling.style.display='none'">
       <svg class="hero-reel hero-reel-fb" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="50" cy="50" r="46" stroke="#D4AF37" stroke-width="2" fill="none"/>
-        <circle cx="50" cy="50" r="8" fill="#D4AF37"/>
-        <circle cx="50" cy="14" r="5" fill="#C8202A"/>
-        <circle cx="50" cy="86" r="5" fill="#1B4FBB"/>
-        <circle cx="18" cy="32" r="5" fill="#1B7C3B"/>
-        <circle cx="82" cy="32" r="5" fill="#E06020"/>
-        <circle cx="18" cy="68" r="5" fill="#6B2F8A"/>
-        <circle cx="82" cy="68" r="5" fill="#D4AF37"/>
-        <path d="M50 4 L50 96 M4 50 L96 50 M18.6 18.6 L81.4 81.4 M81.4 18.6 L18.6 81.4" stroke="#D4AF37" stroke-width="1" opacity=".25"/>
+        <circle cx="50" cy="50" r="46" stroke="#D4AF37" stroke-width="2.5" fill="none"/>
+        <circle cx="50" cy="50" r="10" fill="#D4AF37"/>
+        <circle cx="50" cy="50" r="3"  fill="#080808"/>
+        <circle cx="50" cy="14" r="7" fill="#C8202A"/>
+        <circle cx="50" cy="86" r="7" fill="#1B4FBB"/>
+        <circle cx="18" cy="32" r="7" fill="#1B7C3B"/>
+        <circle cx="82" cy="32" r="7" fill="#E06020"/>
+        <circle cx="18" cy="68" r="7" fill="#6B2F8A"/>
+        <circle cx="82" cy="68" r="7" fill="#D4AF37"/>
+        <path d="M50 4 L50 96 M4 50 L96 50 M18.6 18.6 L81.4 81.4 M81.4 18.6 L18.6 81.4" stroke="#D4AF37" stroke-width="1" opacity=".15"/>
       </svg>
       CINE
     </h1>
@@ -2041,7 +2028,7 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
   <div class="fb">
     <div>
       <p data-t="footCopy">© 2025 TURICINE Producciones Integrales S.A.S. Todos los derechos reservados.</p>
-      <p class="fl-credit" style="margin-top:4px">Hecho con orgullo en Ecuador · <a href="#" aria-label="Diseño gráfico: Carla Wirth">Diseño: Carla Wirth</a></p>
+      <p class="fl-credit" style="margin-top:4px">Hecho con orgullo en Ecuador · <span aria-label="Diseño gráfico: Carla Wirth">Diseño: Carla Wirth</span></p>
     </div>
     <div class="fbs">
       <a href="https://instagram.com/turicine" target="_blank" rel="noopener">@turicine</a>
