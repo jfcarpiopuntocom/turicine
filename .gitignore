@@ -1,0 +1,27 @@
+# Cloudflare Workers — no subir configuración con secretos reales
+workers/wrangler.toml
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de trabajo / backups
+*.bak
+*_old.*
+TURICINE 2025*
+turicine_v199.html
+comet_*.png
+
+# Originales en raíz (ya copiados a assets/)
+Logo Full Web.png
+logo-blanco-y-colores-horizontal-turicine.png
+Turicine Mediakit Corporativo.pdf
+
+# Claude Code (sesiones, memoria, planes)
+.claude/
+
+# Editores
+.vscode/
+.idea/
+*.swp

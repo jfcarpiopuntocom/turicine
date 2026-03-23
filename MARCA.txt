@@ -1,0 +1,270 @@
+================================================================================
+  TURICINE — MANUAL DE MARCA WEB
+  Festival Ecuatoriano de Cine
+  Versión: 1.0 | Fecha: 2026-03
+  Filosofía: documentar para transferir, no para crear dependencia.
+  Este archivo es el mapa. Quien lo lea puede manejar este sitio sin preguntar.
+================================================================================
+
+
+────────────────────────────────────────────────────────────────────────────────
+  MAPA DE ARCHIVOS
+────────────────────────────────────────────────────────────────────────────────
+
+  index.html                   ← EL SITIO. Todo está aquí: HTML + CSS + JS.
+                                  Versión actual: v0.90
+                                  Para versionar: cambiar el comentario al inicio.
+
+  assets/
+    fonts-barlow.css           ← Fuentes Barlow y Barlow Condensed (Google Fonts
+                                  descargado). Si hay internet, el index.html usa
+                                  el CDN directo. Este archivo es el backup offline.
+
+    logo-icono.png             ← Logo cámara multicolor. Uso: nav, favicon, redes.
+                                  SVG inline equivalente ya existe en el HTML.
+
+    logo-horizontal.png        ← Logo horizontal blanco + colores. Uso: footer,
+                                  documentos impresos, presentaciones, email.
+
+    carrete.png                ← [PENDIENTE — el cliente entregará este archivo]
+                                  Carrete de película giratorio del hero.
+                                  El HTML tiene un SVG placeholder con estas clases:
+                                    .hero-reel  → recibe spin (22s) + float (7s)
+                                  Para activarlo: reemplazar el <svg class="hero-reel">
+                                  por <img class="hero-reel" src="assets/carrete.png"
+                                  alt="carrete de película">.
+                                  El CSS de animación ya está listo, no tocar.
+
+    seccion-actividades.png    ← Captura de referencia: diseño de las 4 actividades
+                                  (Proyecciones / Cine Foros / Formación / Encuentros).
+                                  Uso: referencia visual, no está en el HTML.
+
+    sedes-salas-universidades.png  ← Captura de referencia: tarjetas Salas Comerciales
+                                       + Universidades. Sección pendiente de agregar.
+
+    sedes-culturales-plataforma.png ← Captura de referencia: Centros Culturales
+                                        + Actividad Anual. Sección pendiente.
+
+    ilustracion-proyeccion.png ← Ilustración de pantalla de cine con siluetas de
+                                  público. Disponible para usar en secciones futuras
+                                  o como imagen hero alternativa.
+
+    mediakit-turicine-2025.pdf ← Kit de medios oficial. Fuente de verdad para colores,
+                                  datos de audiencia y tono de comunicación.
+
+  workers/
+    leads.js                   ← Cloudflare Worker: recibe leads del formulario.
+                                  POST /leads  → guarda en KV
+                                  GET  /leads?secret=X → lista leads (admin)
+
+    wrangler.toml              ← Configuración del Worker. Aquí van los IDs de KV
+                                  y la clave secreta de admin. NO subir a GitHub
+                                  con los valores reales (usar variables de entorno
+                                  en el dashboard de Cloudflare).
+
+  MARCA.txt                    ← Este archivo. Actualizar con cada cambio mayor.
+
+  .gitignore                   ← Archivos que GitHub ignora.
+
+
+────────────────────────────────────────────────────────────────────────────────
+  PALETA DE COLORES — Variables CSS en index.html (:root)
+────────────────────────────────────────────────────────────────────────────────
+
+  Para cambiar un color en todo el sitio: editar el valor en :root {}.
+  No hay que buscar en el resto del código.
+
+  --bk:      #080808   Fondo principal (negro cine)
+  --bk2:     #111111   Fondo secciones alternadas
+  --bk3:     #191919   Fondo de tarjetas
+  --bk4:     #222222   Fondo de elementos hover
+  --wh:      #ffffff   Texto principal
+  --off:     #f0ece2   Texto cálido / énfasis
+
+  -- PALETA CROMÁTICA (del mediakit oficial) --
+  --red:     #C8202A   Proyecciones / acento primario
+  --gold:    #D4AF37   Color corporativo principal. Botones, títulos, links activos.
+  --goldl:   #F4D03F   Gold más brillante (hover, destellos)
+  --blue:    #1B4FBB   Cine Foros
+  --green:   #1B7C3B   Encuentros
+  --orange:  #E06020   Salas Comerciales
+  --purple:  #6B2F8A   Universidades / Sedes Académicas
+
+  GRADIENTE OFICIAL (barra de colores, scroll progress, separadores):
+    linear-gradient(90deg, #C8202A, #D4AF37, #1B4FBB, #1B7C3B, #E06020, #6B2F8A)
+    Orden: rojo → oro → azul → verde → naranja → morado
+
+  OPACIDADES (no modificar):
+  --muted:   rgba(255,255,255,.45)   Texto secundario
+  --dim:     rgba(255,255,255,.09)   Bordes sutiles
+  --dim2:    rgba(255,255,255,.16)   Bordes medianos
+
+
+────────────────────────────────────────────────────────────────────────────────
+  TIPOGRAFÍA
+────────────────────────────────────────────────────────────────────────────────
+
+  Fuente 1: Barlow
+    Uso: cuerpo de texto, párrafos, etiquetas pequeñas.
+    Pesos usados: 300 (body), 400 (normal), 500 (caps pequeñas), 600 (énfasis).
+    En CSS: font-family: 'Barlow', system-ui, sans-serif;
+
+  Fuente 2: Barlow Condensed
+    Uso: títulos, subtítulos, botones, contadores, logo.
+    Pesos usados: 400 (subtítulos itálica), 700 (botones), 900 (headings).
+    En CSS: font-family: 'Barlow Condensed', sans-serif;
+
+  Carga: líneas 9-11 del <head> en index.html.
+    CDN (requiere internet): Google Fonts URL
+    Offline: importar assets/fonts-barlow.css en su lugar.
+
+  JERARQUÍA DE TEXTOS:
+    Hero title:   Barlow Condensed 900, clamp(5rem, 18vw, 14rem), line-height .88
+    Sección h2:   Barlow Condensed 900, clamp(2.8rem, 5.5vw, 4.8rem)
+    Eyebrow:      Barlow 600, 0.72rem, uppercase, letter-spacing 5px, color --gold
+    Body:         Barlow 300-400, 1.03rem, line-height 1.88
+    Botón:        Barlow Condensed 700, uppercase, letter-spacing 2.5px
+
+
+────────────────────────────────────────────────────────────────────────────────
+  COMPONENTES REUTILIZABLES (clases CSS)
+────────────────────────────────────────────────────────────────────────────────
+
+  .ey           Eyebrow / label dorado sobre los títulos de sección
+  .st           Section title — el h2 grande de cada sección
+  .bt           Body text — aplica estilos a párrafos dentro del div
+  .rv           Reveal animation — aparece al hacer scroll (no tocar la lógica JS)
+  .rvl / .rvr   Reveal desde izquierda / derecha
+  .btn-gold     Botón principal dorado
+  .btn-outline  Botón secundario con borde
+  .nav-cta      Botón del header (versión pequeña)
+  .cbar         Barra de 6 colores separadora entre secciones
+  .hr-dim       Línea divisoria sutil
+  .pull-q       Cita destacada con borde dorado izquierdo
+
+  SISTEMA DE MOSAICO (bloques decorativos con los 6 colores):
+    .mk-mosaic    Grid de bloques de colores
+    .bl           Bloque individual
+    .R .G .B .Gr .O .P .K .W   Rojo/Gold/Azul/Verde/Naranja/Morado/Negro/Blanco
+    .mk-circle    Forma circular
+    .mk-half-t/b/l/r  Media forma
+    .mk-tri       Triángulo
+
+
+────────────────────────────────────────────────────────────────────────────────
+  SECCIONES DEL SITIO (en orden)
+────────────────────────────────────────────────────────────────────────────────
+
+  #hero       Hero principal. Título enorme, carrete giratorio, countdown, CTAs.
+  #que        ¿Qué es TURICINE? Mosaico + significado del nombre + stats.
+  #tray       Trayectoria y solidez. Timeline 2019-2025 + destacados.
+  #fest       El festival. 10 días / funciones / sedes + 6 tarjetas de actividades.
+  #aud        Audiencia. Datos presencial + digital + perfil de público.
+  #importa    Por qué importa. Valores + CTA de alianzas.
+  #apoyo      Oportunidades de apoyo. 3 tipos (empresa / institución / voluntario).
+  #aliados    Aliados actuales. 4 categorías.
+  #equipo     El equipo. Director + 6 roles.
+  #faq        Preguntas frecuentes. 7 preguntas accordion.
+  #contacto   Contacto. Formulario de leads + info + voluntariado.
+  footer      Footer con navegación, tagline y copyright.
+
+  SECCIONES PENDIENTES DE AGREGAR (en assets como referencia):
+    Tarjetas de tipo de sede:
+      — Salas Comerciales (naranja)    → ver sedes-salas-universidades.png
+      — Universidades (morado)         → ver sedes-salas-universidades.png
+      — Centros Culturales (cyan)      → ver sedes-culturales-plataforma.png
+      — Actividad Anual (amarillo)     → ver sedes-culturales-plataforma.png
+
+
+────────────────────────────────────────────────────────────────────────────────
+  BILINGÜISMO
+────────────────────────────────────────────────────────────────────────────────
+
+  El sitio tiene español e inglés. El idioma se controla con un objeto JS
+  al final del index.html, justo antes del cierre </body>.
+
+  Cómo funciona:
+    — Todos los textos del HTML tienen data-t="clave"
+    — El objeto T.es y T.en contienen los textos por clave
+    — El botón de idioma en el header alterna entre los dos
+    — Idioma por defecto: español (es)
+
+  Para cambiar un texto:
+    1. Buscar la clave data-t en el HTML
+    2. Editar el texto en T.es (español) y T.en (inglés) al final del archivo
+    — No editar el texto directamente en el HTML o se desincroniza
+
+
+────────────────────────────────────────────────────────────────────────────────
+  WORKER DE LEADS (formulario de contacto)
+────────────────────────────────────────────────────────────────────────────────
+
+  Archivo:  workers/leads.js
+  Config:   workers/wrangler.toml
+
+  Para activar:
+    1. Crear cuenta gratuita en Cloudflare Workers
+    2. Crear un KV namespace llamado "TURICINE_LEADS"
+    3. Pegar el ID del KV en wrangler.toml → id = "..."
+    4. Definir ADMIN_SECRET en el dashboard de Cloudflare (no en el .toml)
+    5. Deploy: cd workers && npx wrangler deploy
+
+  Para ver los leads capturados:
+    GET https://turicine-leads.TU-SUBDOMINIO.workers.dev/leads?secret=TU_CLAVE
+
+  En index.html, el formulario de contacto debe hacer:
+    fetch("https://turicine-leads.TU-SUBDOMINIO.workers.dev/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, org, message, type })
+    })
+  (esto se activa en v0.94)
+
+
+────────────────────────────────────────────────────────────────────────────────
+  CARRETE GIRATORIO (pendiente)
+────────────────────────────────────────────────────────────────────────────────
+
+  El hero tiene un carrete de película animado que gira y flota.
+  Actualmente es un SVG inline en el HTML (búscar: class="hero-reel").
+
+  Cuando el cliente entregue carrete.png:
+    1. Copiar el archivo a assets/carrete.png
+    2. En index.html buscar el elemento <svg class="hero-reel"> ... </svg>
+    3. Reemplazarlo completo por:
+         <img class="hero-reel" src="assets/carrete.png" alt="">
+    4. Las animaciones CSS (.hero-reel { animation: spin..., float... }) ya están
+       listas. No hay que tocarlas.
+    5. Si el PNG tiene fondo transparente, el efecto funciona perfecto.
+    6. Agregar en assets/ y actualizar esta sección del manual.
+
+
+────────────────────────────────────────────────────────────────────────────────
+  HISTORIAL DE VERSIONES
+────────────────────────────────────────────────────────────────────────────────
+
+  v0.90  2026-03   Baseline. Estructura oficial de archivos. Fuente limpia.
+                   Workers y manual de marca creados.
+  v0.91  2026-03   Fuentes locales. Google Fonts CDN reemplazado por
+                   assets/fonts-barlow.css. Funciona sin internet.
+
+
+────────────────────────────────────────────────────────────────────────────────
+  PARA EL SIGUIENTE RESPONSABLE
+────────────────────────────────────────────────────────────────────────────────
+
+  Este sitio está diseñado para ser mantenido sin depender de quien lo creó.
+  Todo lo que necesitas está aquí:
+    — Los colores son variables. Cámbialos en :root {}.
+    — Los textos son traducciones. Cámbialos en el objeto T.es / T.en.
+    — Los assets tienen nombres claros. El manual dice para qué sirve cada uno.
+    — El Worker es autónomo. Cloudflare lo ejecuta sin servidor propio.
+
+  Si tienes una duda, la respuesta está en este archivo o en el HTML mismo.
+  Los comentarios en el HTML usan el patrón:
+    /* === NOMBRE DE SECCIÓN === */
+  para que puedas navegar fácilmente.
+
+  Fuente de verdad para decisiones de diseño: assets/mediakit-turicine-2025.pdf
+
+================================================================================
