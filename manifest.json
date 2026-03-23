@@ -1,0 +1,24 @@
+{
+  "name": "TURICINE — Festival Ecuatoriano de Cine",
+  "short_name": "TURICINE",
+  "description": "Cine en todas partes, cine para todos.",
+  "start_url": "/turicine/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#0a0a0a",
+  "lang": "es-EC",
+  "icons": [
+    {
+      "src": "assets/logo-icono.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/logo-icono.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
