@@ -71,9 +71,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
-<!-- Hero carrete: descomenta este preload cuando assets/carrete.png exista
-<link rel="preload" href="assets/carrete.png" as="image" fetchpriority="high">
--->
+<link rel="preload" href="assets/logo-icono.png" as="image" fetchpriority="high">
 
 <link rel="stylesheet" href="assets/fonts-barlow.css">
 <style>
@@ -469,7 +467,7 @@ section{padding:110px 60px;position:relative}
   width:clamp(70px,10vw,130px);
   height:clamp(70px,10vw,130px);
   margin:0 6px;
-  animation:spin 22s linear infinite, float 7s ease-in-out infinite;
+  animation:spin 28s linear infinite;
   filter:drop-shadow(0 0 30px rgba(212,175,55,.5));
   vertical-align:middle;
 }
@@ -1261,26 +1259,9 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
 
     <h1 class="hero-title" id="hero-title">
       <span class="dim">T</span>URI
-      <!-- v0.96: carrete.png cuando el usuario lo entregue.
-           img oculta por defecto → al cargar exitosamente, reemplaza el SVG.
-           Si assets/carrete.png no existe, el SVG de fallback sigue visible. -->
-      <img class="hero-reel" src="assets/carrete.png"
-           alt="" aria-hidden="true" width="130" height="130"
-           fetchpriority="high" loading="eager"
-           style="display:none"
-           onload="this.style.display='inline-block';this.nextElementSibling.style.display='none'">
-      <svg class="hero-reel hero-reel-fb" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="50" cy="50" r="46" stroke="#D4AF37" stroke-width="2.5" fill="none"/>
-        <circle cx="50" cy="50" r="10" fill="#D4AF37"/>
-        <circle cx="50" cy="50" r="3"  fill="#080808"/>
-        <circle cx="50" cy="14" r="7" fill="#C8202A"/>
-        <circle cx="50" cy="86" r="7" fill="#1B4FBB"/>
-        <circle cx="18" cy="32" r="7" fill="#1B7C3B"/>
-        <circle cx="82" cy="32" r="7" fill="#E06020"/>
-        <circle cx="18" cy="68" r="7" fill="#6B2F8A"/>
-        <circle cx="82" cy="68" r="7" fill="#D4AF37"/>
-        <path d="M50 4 L50 96 M4 50 L96 50 M18.6 18.6 L81.4 81.4 M81.4 18.6 L18.6 81.4" stroke="#D4AF37" stroke-width="1" opacity=".15"/>
-      </svg>
+      <img class="hero-reel" src="assets/logo-icono.png"
+           alt="Logo TURICINE" width="130" height="130"
+           fetchpriority="high" loading="eager">
       CINE
     </h1>
 
