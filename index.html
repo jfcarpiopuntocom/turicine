@@ -1215,7 +1215,7 @@ footer{background:var(--bk);border-top:1px solid var(--dim);padding:80px 60px 40
 
     <!-- LANG PILL — persistent -->
     <button class="lang-pill" id="lang-btn" onclick="toggleLang()" aria-label="Switch language">
-      <span class="lp-flag" id="lp-flag">🇺🇸</span>
+      <span class="lp-flag" id="lp-flag">🇬🇧</span>
       <span class="lp-sep" aria-hidden="true"></span>
       <span id="lp-label">EN</span>
     </button>
@@ -2378,7 +2378,7 @@ function applyLang(l){
     ? 'TURICINE 2026 • Festival Ecuatoriano de Cine'
     : 'TURICINE 2026 • Ecuadorian Film Festival';
   // Update pill
-  document.getElementById('lp-flag').textContent = l==='es'?'🇺🇸':'🇪🇨';
+  document.getElementById('lp-flag').textContent = l==='es'?'🇬🇧':'🇪🇸';
   document.getElementById('lp-label').textContent = l==='es'?'EN':'ES';
   document.getElementById('lang-btn').setAttribute('aria-label', l==='es'?'Switch to English':'Cambiar a Español');
 }
